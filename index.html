@@ -46,7 +46,7 @@
             </div>
             <div class="col50">
                 <div class="imgBx">
-                    <img src="/img/about-section.jpg" alt="">
+                    <img class="lazy" data-src="/img/about-section.jpg" alt="">
                 </div>
             </div>
         </div>
@@ -60,7 +60,7 @@
         <div class="content">
             <div class="box">
                 <div class="imgBx">
-                    <img src="/img/bisexual.jpg" alt="">
+                    <img class="lazy" data-src="/img/bisexual.jpg" alt="">
                 </div>
                 <div class="text">
                     <h3>Bisexual</h3>
@@ -68,7 +68,7 @@
             </div>
             <div class="box">
                 <div class="imgBx">
-                    <img src="/img/lesbian.jpeg" alt="">
+                    <img class="lazy" data-src="/img/lesbian.jpeg" alt="">
                 </div>
                 <div class="text">
                     <h3>Lesbian</h3>
@@ -76,15 +76,15 @@
             </div>
             <div class="box">
                 <div class="imgBx">
-                    <img src="/img/gay.jpeg" alt="">
+                    <img class="lazy" data-src="/img/gay.jpeg" alt="">
                 </div>
                 <div class="text">
-                    <a href="/pages/gay-profile.html" style="text-decoration: none;"><h3>Gay</h3></a>
+                    <h3>Gay</h3>
                 </div>
             </div>
             <div class="box">
                 <div class="imgBx">
-                    <img src="/img/plus.jpg" alt="">
+                    <img class="lazy" data-src="/img/plus.jpg" alt="">
                 </div>
                 <div class="text">
                     <h3>+ Plus</h3>
@@ -92,7 +92,7 @@
             </div>
             <div class="box">
                 <div class="imgBx">
-                    <img src="/img/queer.webp" alt="">
+                    <img class="lazy" data-src="/img/queer.webp" alt="">
                 </div>
                 <div class="text">
                     <h3>Queer</h3>
@@ -100,7 +100,7 @@
             </div>
             <div class="box">
                 <div class="imgBx">
-                    <img src="/img/trans.jpg" alt="">
+                    <img class="lazy" data-src="/img/trans.jpg" alt="">
                 </div>
                 <div class="text">
                     <h3>Transgender</h3>
@@ -117,7 +117,7 @@
         <div class="content">
             <div class="box">
                 <div class="imgBx">
-                    <img src="/img/LGBTQ_1.png" alt="">
+                    <img class="lazy" data-src="/img/LGBTQ_1.png" alt="">
                 </div>
                 <div class="text">
                     <p>We base our relationships on our common humanity and show 
@@ -129,7 +129,7 @@
             </div>
             <div class="box">
                 <div class="imgBx">
-                    <img src="/img/LGBTQ_2.jpg" alt="">
+                    <img class="lazy" data-src="/img/LGBTQ_2.jpg" alt="">
                 </div>
                 <div class="text">
                     <p>Empowering all and creating the time and space for good people 
@@ -141,7 +141,7 @@
             </div>
             <div class="box">
                 <div class="imgBx">
-                    <img src="/img/LGBTQ_3.jpeg" alt="">
+                    <img class="lazy" data-src="/img/LGBTQ_3.jpeg" alt="">
                 </div>
                 <div class="text">
                     <p>Adversity can build us up instead of tearing us down. 
@@ -197,6 +197,37 @@
             menuToggle.classList.toggle('active');
             navigation.classList.toggle('active');
         }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        var lazyloadImages = document.querySelectorAll("img.lazy");    
+        var lazyloadThrottleTimeout;
+        
+        function lazyload () {
+        if(lazyloadThrottleTimeout) {
+            clearTimeout(lazyloadThrottleTimeout);
+        }    
+        
+        lazyloadThrottleTimeout = setTimeout(function() {
+            var scrollTop = window.pageYOffset;
+            lazyloadImages.forEach(function(img) {
+                if(img.offsetTop < (window.innerHeight + scrollTop)) {
+                    img.src = img.dataset.src;
+                    img.classList.remove('lazy');
+                }
+            });
+            if(lazyloadImages.length == 0) { 
+                document.removeEventListener("scroll", lazyload);
+                window.removeEventListener("resize", lazyload);
+                window.removeEventListener("orientationChange", lazyload);
+            }
+        }, 20);
+        }
+        
+        document.addEventListener("scroll", lazyload);
+        window.addEventListener("resize", lazyload);
+        window.addEventListener("orientationChange", lazyload);
+    });
     </script>
 </body>
 </html>
